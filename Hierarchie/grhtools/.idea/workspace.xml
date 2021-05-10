@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9ba73b21-4e6f-4dcb-a16f-9a78d9def5b6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../Comptafi/comptafi.api/OREL_API/apis/form/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../NHHOTELS/Dédoublonnage des variables prepa paie/report_processor.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Volotea/Imports/Rubriques Prod.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Vueling/Bonus Trimestriel/config_2018.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Vueling/Bonus Trimestriel/config_2019.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Vueling/Bonus annuel/clean_missing.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Vueling/Recalculs Bonus Trimestriel/clean_missing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Batisanté/Ticket Resto/excel_process.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../Batisanté/Ticket Resto/excel_process.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Comptafi/comptafi.api/OREL_API/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../Comptafi/comptafi.api/OREL_API/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Comptafi/comptafi.api/OREL_API/apis/candidate_user/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../Comptafi/comptafi.api/OREL_API/apis/candidate_user/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Comptafi/comptafi.api/OREL_API/configuraton/development.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../Comptafi/comptafi.api/OREL_API/configuraton/development.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Comptafi/comptafi.api/OREL_API/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../Comptafi/comptafi.api/OREL_API/core.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Comptafi/comptafi.app/src/components/CandidateAccountEdit.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../Comptafi/comptafi.app/src/components/CandidateAccountEdit.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Comptafi/comptafi.app/src/pages/candidate_space.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../Comptafi/comptafi.app/src/pages/candidate_space.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Comptafi/comptafi.app/src/services/api.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../Comptafi/comptafi.app/src/services/api.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Comptafi/comptafi.app/src/services/serviceWorker.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../Comptafi/comptafi.app/src/services/serviceWorker.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Momentum/Imports/GUIDE RUBRIQUE CODE ET ONGLET.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../Momentum/Imports/GUIDE RUBRIQUE CODE ET ONGLET.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Momentum/Imports/chom.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../Momentum/Imports/chom.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Momentum/Imports/headless.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../Momentum/Imports/headless.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Momentum/Imports/imports/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../Momentum/Imports/imports/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Volotea/Imports/process_file/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../Volotea/Imports/process_file/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Vueling/Bonus annuel/config.ini" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vueling/Bonus annuel/config.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Vueling/Bonus annuel/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vueling/Bonus annuel/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="JupyterTrust" id="30bf39bb-3898-450c-93bc-9528ef4d755a" />
+  <component name="ProjectId" id="1iwzAEfKrB0uhG7Au7cUfAsgaJ1" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9ba73b21-4e6f-4dcb-a16f-9a78d9def5b6" name="Default Changelist" comment="" />
+      <created>1602833296328</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1602833296328</updated>
+      <workItem from="1602833297451" duration="758000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

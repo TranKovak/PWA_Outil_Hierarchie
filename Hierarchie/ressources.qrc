@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="mainUi">
+    <file>Ressources/excel.png</file>
+    <file>Ressources/office-building.png</file>
+  </qresource>
+</RCC>
