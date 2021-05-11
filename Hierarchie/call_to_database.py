@@ -30,6 +30,7 @@ def get_groups(cursor, black_list: list) -> dict:
     query = f'''
     SELECT Libelle, idGroupe 
     FROM Groupe
+    ORDER BY Libelle
     '''
     cursor.execute(query)
     groups = call_to_dict(cursor=cursor)

@@ -17,9 +17,10 @@ from call_to_database import get_employees, get_groups, get_society, get_enterpr
 __project_name__ = 'GDS_Hiérarchie'
 
 
-def fill_decision_maker(employees):
+def fill_decision_maker(employees: dict) -> dict:
     """
-
+    Creates a dict (dec_makers) with decision makers as keys and fills each with their subordinates
+    :param employees: all the employees of the group of companies
     :return:
     """
     dec_makers = dict()
@@ -30,14 +31,16 @@ def fill_decision_maker(employees):
     return dec_makers
 
 
-def draw_stage(stage, column, row, sheet, employees, decision_makers):
+def draw_stage(stage: int, column: int, row: int, sheet, employees: dict, decision_makers: dict) -> int:
     """
-
-    :param stage:
-    :param column:
-    :param row:
-    :param sheet:
-    :return:
+    Recursive that fills the excel with a complete stage (N-3 for exemple)
+    :param stage: id of the employee to write in the file
+    :param column: column in which to write
+    :param row: row in which to write
+    :param sheet: excel sheet in which to write
+    :param employees: dict containing all the employees and their information
+    :param decision_makers: dict containing every decision_makers in the companies with their subordinate
+    :return: the new value of row
     """
     if stage in decision_makers.keys():
         sheet.cell(row=row, column=column, value=str(stage))
@@ -56,9 +59,12 @@ def draw_stage(stage, column, row, sheet, employees, decision_makers):
     return row
 
 
-def draw_hierarchy(decision_makers, employees, path):
+def draw_hierarchy(decision_makers: dict, employees: dict, path: str):
     """
-
+    creates and fills an excel file with the hierarchy of the group of companies or company.
+    :param decision_makers: dict with all the decision_makers of the companies as keys and their subordinates as values
+    :param employees: all the employees in the companies and their information
+    :param path: path for the excel saving
     :return:
     """
     excel = Workbook()
@@ -78,9 +84,9 @@ def draw_hierarchy(decision_makers, employees, path):
     excel.save(path)
 
 
-class Information_popup(QDialog):
+class InformationPopup(QDialog):
     def __init__(self, parent=None):
-        super(Information_popup, self).__init__(parent)
+        super(InformationPopup, self).__init__(parent)
         self.ui = Ui_info()
         self.ui.setupUi(self)
         self.setWindowTitle("Information popup")
@@ -124,14 +130,13 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
         self.setWindowTitle("Hiérarchie")
         self.popup = PopUp()
-        self.information = Information_popup()
+        self.information = InformationPopup()
 
         self.cursor = cursor
         self.excel_path = ""
         self.default_path = defautl_path
 
         self.groups = get_groups(cursor_pwa, config.config['black_list']['group'])
-        self.groups = sorted(self.groups, key=lambda x: x[1])
         self.setup_groups()
         self.companies = get_society(cursor_pwa, config.config['black_list']['enterprise'])
         self.companies = dict(sorted(self.companies.items(), key=lambda x: x[1]['NomSociete']))
@@ -152,36 +157,53 @@ class MainWindow(QMainWindow):
         for c in self.companies:
             self.ui.companies_comboBox.addItem(self.companies[c]["NomSociete"])
 
-    def group_dropwdown_changed(self, index):
+    def group_dropwdown_changed(self, index: int):
         if index > 0:
             self.ui.companies_comboBox.setEnabled(False)
         else:
             self.ui.companies_comboBox.setEnabled(True)
 
     def get_hierarchy(self):
+        """
+        function that gathers the hierarchy of a company or a group of companies.
+        Asking for the directory of destination
+        call the database to get the employees
+        creates a dict with the decision makers and their subordinates from the dict self.employees
+        then calls draw hierarchy to create the excel file
+        :return:
+        """
         if self.ui.group_comboBox.currentIndex() == 0 and self.ui.companies_comboBox.currentIndex() == 0:
             self.information.set_information(
                 "Veuillez choisir une entreprise ou un groupe")
             self.information.exec()
             return
         directory = QFileDialog.getExistingDirectory(self, "Choix du dossier", self.default_path)
-        logger.debug(directory)
         if len(directory) == 0:
             return
         if self.ui.group_comboBox.currentIndex() > 0:
             employees = get_employees(self.cursor, get_enterprise_from_group(self.cursor, self.groups[self.ui.group_comboBox.currentText()]['idGroupe']))
         else:
-            employees = get_employees(self.cursor, get_enterprise_from_group(self.cursor, self.groups[self.ui.group_comboBox.currentText()]['idGroupe']))
+            employees = get_employees(self.cursor, self.get_id_company())
         decision_makers = fill_decision_maker(employees=employees)
-        draw_hierarchy(decision_makers=decision_makers, employees=employees, path=self.ui.group_comboBox.currentText() + "-hiérarchie.xlsx")
-
+        if self.ui.group_comboBox.currentIndex() != 0:
+            draw_hierarchy(decision_makers=decision_makers, employees=employees,
+                           path=self.ui.group_comboBox.currentText() + "-hiérarchie.xlsx")
+        else:
+            draw_hierarchy(decision_makers=decision_makers, employees=employees,
+                           path=self.ui.companies_comboBox.currentText() + "-hiérarchie.xlsx")
         self.ui.group_comboBox.setCurrentIndex(0)
         self.ui.companies_comboBox.setCurrentIndex(0)
         self.information.set_information("La hiérarchie a été récupérée")
         self.information.exec()
 
+    def get_id_company(self):
+        for c in self.companies:
+            if self.companies[c]['NomSociete'] == self.ui.companies_comboBox.currentText():
+                return [c]
+
     def get_excel_file(self):
-        path = QFileDialog.getOpenFileName(self, "Choix du fichier excel", self.default_path, "Fichier excel (*.xlsx)")[0]
+        path = QFileDialog.getOpenFileName(self, "Choix du fichier excel", self.default_path, "Fichier excel (*.xlsx)")[
+            0]
         logger.debug(path)
         self.excel_path = path
         if path == "":
