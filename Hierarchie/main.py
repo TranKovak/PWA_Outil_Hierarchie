@@ -5,6 +5,8 @@ from openpyxl import Workbook
 
 import os
 import sys
+import datetime
+import subprocess
 from PySide6.QtCore import QFile
 from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog, QDialog
 
@@ -12,7 +14,8 @@ from popup import Ui_Dialog
 from info_popup import Ui_info
 from mainWindow import Ui_MainWindow
 from reading_excel import get_hierarchy_from_excel
-from call_to_database import get_employees, get_groups, get_society, get_enterprise_from_group
+from call_to_database import get_employees, get_groups, get_society, get_enterprise_from_group, \
+    update_employee_decision_maker
 
 __project_name__ = 'GDS_Hiérarchie'
 
@@ -181,16 +184,17 @@ class MainWindow(QMainWindow):
         if len(directory) == 0:
             return
         if self.ui.group_comboBox.currentIndex() > 0:
-            employees = get_employees(self.cursor, get_enterprise_from_group(self.cursor, self.groups[self.ui.group_comboBox.currentText()]['idGroupe']))
+            employees = get_employees(self.cursor, get_enterprise_from_group(self.cursor, self.groups[
+                self.ui.group_comboBox.currentText()]['idGroupe']))
         else:
             employees = get_employees(self.cursor, self.get_id_company())
         decision_makers = fill_decision_maker(employees=employees)
         if self.ui.group_comboBox.currentIndex() != 0:
             draw_hierarchy(decision_makers=decision_makers, employees=employees,
-                           path=self.ui.group_comboBox.currentText() + "-hiérarchie.xlsx")
+                           path=directory + "/" + self.ui.group_comboBox.currentText() + "-hiérarchie.xlsx")
         else:
             draw_hierarchy(decision_makers=decision_makers, employees=employees,
-                           path=self.ui.companies_comboBox.currentText() + "-hiérarchie.xlsx")
+                           path=directory + "/" + self.ui.companies_comboBox.currentText() + "-hiérarchie.xlsx")
         self.ui.group_comboBox.setCurrentIndex(0)
         self.ui.companies_comboBox.setCurrentIndex(0)
         self.information.set_information("La hiérarchie a été récupérée")
@@ -204,7 +208,6 @@ class MainWindow(QMainWindow):
     def get_excel_file(self):
         path = QFileDialog.getOpenFileName(self, "Choix du fichier excel", self.default_path, "Fichier excel (*.xlsx)")[
             0]
-        logger.debug(path)
         self.excel_path = path
         if path == "":
             self.ui.get_excel_file_button.setText("Choisir le fichier excel")
@@ -212,7 +215,7 @@ class MainWindow(QMainWindow):
             self.ui.get_excel_file_button.setText(os.path.split(path)[1])
 
     def set_hierarchy(self):
-        if self.excel_path != "":
+        if self.excel_path == "":
             self.information.set_information(
                 "Veuillez choisir le fichier excel contenant la hiérarchie pour pouvoir la changer")
             self.information.exec()
@@ -220,10 +223,33 @@ class MainWindow(QMainWindow):
             self.popup.set_question("Voulez-vous changer la hiérarchie ?")
             self.popup.exec()
             if self.popup.status == 1:
-                get_hierarchy_from_excel(self.excel_path)
+                self.backup_database()
+                hierarchy = get_hierarchy_from_excel(self.excel_path)
+                for stage in hierarchy:
+                    logger.debug(stage)
+                    for employee in hierarchy[stage]:
+                        logger.debug("\t" + employee)
+                # update_employee_decision_maker(cursor=cursor_pwa, decision_maker_id=stage, employee_id=employee)
                 self.ui.get_excel_file_button.setText("Choisir le fichier excel")
                 self.information.set_information("La hiérarchie a été mise à jour")
             self.information.exec()
+
+    @staticmethod
+    def backup_database():
+        """
+        Creates a backup of the database
+        -S -> Name of the server
+        -U -> username
+        -P -> password
+        -Q -> cmdline query
+        """
+        date = datetime.date.today()
+        cmd_line = "SqlCmd -S " + config.config['login_pwa']['server'] \
+                   + " -U " + config.config['login_pwa']['username'] \
+                   + " -P " + config.config['login_pwa']['password'] \
+                   + " -Q \"Backup Database PWA To Disk=\'E:\\Donnees_GRH\\3 Jullien - Informatique" \
+                     "\\PWA\\backup hiérarchie\\pwa - " + date.strftime("%d-%m-%Y") + ".bak\'\""
+        subprocess.call(cmd_line)
 
 
 if __name__ == '__main__':
@@ -232,6 +258,10 @@ if __name__ == '__main__':
                                 + ';DATABASE=' + config.config['login_pwa']['database'] + ';UID=' +
                                 config.config['login_pwa']['username'] + ';PWD=' +
                                 config.config['login_pwa']['password']).cursor()
+    logger.debug('DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + config.config['login_pwa']['server']
+                 + ';DATABASE=' + config.config['login_pwa']['database'] + ';UID=' +
+                 config.config['login_pwa']['username'] + ';PWD=' +
+                 config.config['login_pwa']['password'])
 
     app = QApplication(sys.argv)
     window = MainWindow(cursor=cursor_pwa, defautl_path=config.config['path'])

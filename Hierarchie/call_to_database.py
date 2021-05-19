@@ -73,3 +73,20 @@ def get_employees(cursor, id_dossier: list) -> dict:
     '''
     cursor.execute(query)
     return call_to_dict(cursor=cursor)
+
+
+def update_employee_decision_maker(cursor, decision_maker_id: str, employee_id: str):
+    if len(decision_maker_id) > 0:
+        query = f'''
+        UPDATE Salarie
+        SET idDecideur = {decision_maker_id}
+        WHERE CodMatricule = '{employee_id}'
+        '''
+    else:
+        query = f'''
+        UPDATE Salarie
+        SET idDecideur = NULL
+        WHERE CodMatricule = '{employee_id}'
+        '''
+    logger.debug(query)
+    cursor.execute(query)

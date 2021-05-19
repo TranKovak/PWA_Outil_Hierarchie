@@ -49,10 +49,11 @@ def get_stage(column: int, row: int, sheet, decision_maker: str):
     return row + 1
 
 
-def get_hierarchy_from_excel(path: str):
+def get_hierarchy_from_excel(path: str) -> dict:
     excel = load_workbook(path)
     sheet = excel.active
-    get_stage(column=1, row=1, sheet=sheet, decision_maker=None)
-    for r in result:
-        logger.debug(r)
-        logger.debug(result[r])
+    get_stage(column=1, row=1, sheet=sheet, decision_maker="")
+    # for r in result:
+    #    logger.debug(r)
+    #    logger.debug(result[r])
+    return result
