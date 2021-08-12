@@ -267,4 +267,4 @@ if __name__ == '__main__':
     window = MainWindow(cursor=cursor_pwa, defautl_path=config.config['path'])
     window.show()
 
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
