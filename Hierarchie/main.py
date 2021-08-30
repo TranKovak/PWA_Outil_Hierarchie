@@ -14,8 +14,7 @@ from popup import Ui_Dialog
 from info_popup import Ui_info
 from mainWindow import Ui_MainWindow
 from reading_excel import get_hierarchy_from_excel
-from call_to_database import get_employees, get_groups, get_society, get_enterprise_from_group, \
-    update_employee_decision_maker
+from call_to_database import get_employees, get_groups, get_society, get_enterprise_from_group, update_employee_decision_maker
 
 __project_name__ = 'GDS_Hiérarchie'
 
@@ -127,7 +126,7 @@ class PopUp(QDialog):
 
 
 class MainWindow(QMainWindow):
-    def __init__(self, cursor, defautl_path):
+    def __init__(self, cursor, default_path):
         super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
@@ -137,7 +136,10 @@ class MainWindow(QMainWindow):
 
         self.cursor = cursor
         self.excel_path = ""
-        self.default_path = defautl_path
+        self.default_path = default_path
+        self.ui.get_excel_file_button.setEnabled(False)
+        self.ui.getHierarchy_button.setEnabled(False)
+        self.ui.set_hierarchy_button.setEnabled(False)
 
         self.groups = get_groups(cursor_pwa, config.config['black_list']['group'])
         self.setup_groups()
@@ -146,6 +148,7 @@ class MainWindow(QMainWindow):
         self.setup_companies()
 
         self.ui.group_comboBox.currentIndexChanged.connect(self.group_dropwdown_changed)
+        self.ui.companies_comboBox.currentIndexChanged.connect(self.enterprise_dropwdown_changed)
         self.ui.getHierarchy_button.clicked.connect(self.get_hierarchy)
         self.ui.get_excel_file_button.clicked.connect(self.get_excel_file)
         self.ui.set_hierarchy_button.clicked.connect(self.set_hierarchy)
@@ -165,6 +168,24 @@ class MainWindow(QMainWindow):
             self.ui.companies_comboBox.setEnabled(False)
         else:
             self.ui.companies_comboBox.setEnabled(True)
+        self.button_set_enabled()
+
+    def enterprise_dropwdown_changed(self, index: int):
+        if index > 0:
+            self.ui.group_comboBox.setEnabled(False)
+        else:
+            self.ui.group_comboBox.setEnabled(True)
+        self.button_set_enabled()
+
+    def button_set_enabled(self):
+        if self.ui.companies_comboBox.currentIndex() > 0 or self.ui.group_comboBox.currentIndex() > 0:
+            self.ui.getHierarchy_button.setEnabled(True)
+            self.ui.get_excel_file_button.setEnabled(True)
+            self.ui.set_hierarchy_button.setEnabled(True)
+        else:
+            self.ui.getHierarchy_button.setEnabled(False)
+            self.ui.get_excel_file_button.setEnabled(False)
+            self.ui.set_hierarchy_button.setEnabled(False)
 
     def get_hierarchy(self):
         """
@@ -229,7 +250,12 @@ class MainWindow(QMainWindow):
                     logger.debug(stage)
                     for employee in hierarchy[stage]:
                         logger.debug("\t" + employee)
-                # update_employee_decision_maker(cursor=cursor_pwa, decision_maker_id=stage, employee_id=employee)
+                        if self.ui.group_comboBox.currentIndex() > 0:
+                            logger.debug('POUR GROUP')
+                            update_employee_decision_maker(cursor=cursor_pwa, decision_maker_id=stage, employee_id=employee, id_dossier=self.groups[self.ui.group_comboBox.currentText()]['idGroupe'])
+                        else:
+                            logger.debug('POUR ENTREPRISE')
+                            update_employee_decision_maker(cursor=cursor_pwa, decision_maker_id=stage, employee_id=employee, id_dossier=self.get_id_company())
                 self.ui.get_excel_file_button.setText("Choisir le fichier excel")
                 self.information.set_information("La hiérarchie a été mise à jour")
             self.information.exec()
@@ -264,7 +290,7 @@ if __name__ == '__main__':
                  config.config['login_pwa']['password'])
 
     app = QApplication(sys.argv)
-    window = MainWindow(cursor=cursor_pwa, defautl_path=config.config['path'])
+    window = MainWindow(cursor=cursor_pwa, default_path=config.config['path'])
     window.show()
 
     sys.exit(app.exec())

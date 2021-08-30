@@ -18,12 +18,15 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(512, 299)
+        MainWindow.resize(512, 307)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayout = QVBoxLayout(self.centralwidget)
+        self.verticalLayout.setSpacing(15)
         self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(10, 20, 10, 20)
         self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setSpacing(6)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.label = QLabel(self.centralwidget)
         self.label.setObjectName(u"label")
@@ -35,6 +38,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.label)
 
         self.verticalLayout_2 = QVBoxLayout()
+        self.verticalLayout_2.setSpacing(0)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.label_4 = QLabel(self.centralwidget)
         self.label_4.setObjectName(u"label_4")
@@ -62,18 +66,17 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout)
 
-        self.verticalSpacer_3 = QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Fixed)
+        self.line_2 = QFrame(self.centralwidget)
+        self.line_2.setObjectName(u"line_2")
+        self.line_2.setFrameShape(QFrame.HLine)
+        self.line_2.setFrameShadow(QFrame.Sunken)
 
-        self.verticalLayout.addItem(self.verticalSpacer_3)
+        self.verticalLayout.addWidget(self.line_2)
 
         self.getHierarchy_button = QPushButton(self.centralwidget)
         self.getHierarchy_button.setObjectName(u"getHierarchy_button")
 
         self.verticalLayout.addWidget(self.getHierarchy_button)
-
-        self.verticalSpacer = QSpacerItem(20, 20, QSizePolicy.Minimum, QSizePolicy.Fixed)
-
-        self.verticalLayout.addItem(self.verticalSpacer)
 
         self.line = QFrame(self.centralwidget)
         self.line.setObjectName(u"line")
@@ -81,10 +84,6 @@ class Ui_MainWindow(object):
         self.line.setFrameShadow(QFrame.Sunken)
 
         self.verticalLayout.addWidget(self.line)
-
-        self.verticalSpacer_2 = QSpacerItem(20, 20, QSizePolicy.Minimum, QSizePolicy.Fixed)
-
-        self.verticalLayout.addItem(self.verticalSpacer_2)
 
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
